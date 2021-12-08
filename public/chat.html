@@ -12,11 +12,11 @@
     <link rel="stylesheet" href="css/style.css" />
     <title>ChatCord App</title>
   </head>
-  <body>
+  <body class="body">
     <div class="chat-container">
       <header class="chat-header">
         <h1><i class="fas fa-smile"></i> ChatCord</h1>
-        <a id="leave-btn" class="btn">Leave Room</a>
+        <a id="leave-btn" class="btn" style="color: #333; border-radius: 5px;"><i class="fas fa-sign-out-alt"></i>Leave Room</a>
       </header>
       <main class="chat-main">
         <div class="chat-sidebar">
@@ -35,8 +35,9 @@
             placeholder="Enter Message"
             required
             autocomplete="off"
+            class="input-item"
           />
-          <button class="btn"><i class="fas fa-paper-plane"></i> Send</button>
+          <button class="btn" style="color: #333; border-radius: 5px;"><i class="fas fa-paper-plane"></i> Send</button>
         </form>
       </div>
     </div>

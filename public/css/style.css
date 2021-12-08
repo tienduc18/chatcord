@@ -39,23 +39,33 @@ a {
 }
 
 /* Chat Page */
-
+.body{
+	background-image: url("https://thuthuatnhanh.com/wp-content/uploads/2019/12/hinh-nen-may-tinh.jpg");
+	background-repeat: no-repeat;
+	height: 100%;
+	width: 100%;
+}
 .chat-container {
 	max-width: 1100px;
 	background: #fff;
 	margin: 30px auto;
 	overflow: hidden;
+	border-radius: 10px;
 }
 
 .chat-header {
 	background: var(--dark-color-a);
-	color: #fff;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
+	color: rgb(112, 112, 112);
+	background-color: #bbdfee;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
 	padding: 15px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	border-top: 3px solid rgb(88, 177, 236);
+	border-left: 3px solid rgb(88, 177, 236);
+	border-right: 3px solid rgb(88, 177, 236);
 }
 
 .chat-main {
@@ -64,10 +74,15 @@ a {
 }
 
 .chat-sidebar {
-	background: var(--dark-color-b);
+	/* background: var(--dark-color-b); */
 	color: #fff;
 	padding: 20px 20px 60px;
 	overflow-y: scroll;
+	color: rgb(97, 97, 97);
+	font-size: 20px;
+	background-color: #cde7f1;
+	border-left: 3px solid rgb(88, 177, 236);
+
 }
 
 .chat-sidebar h2 {
@@ -89,6 +104,7 @@ a {
 	padding: 30px;
 	max-height: 500px;
 	overflow-y: scroll;
+	background-image: url("https://file.vfo.vn/hinh/2018/03/hinh-anh-hinh-nen-powerpoint-don-gian-dep-nhat-chuyen-nghiep-1.jpg");
 }
 
 .chat-messages .message {
@@ -113,7 +129,13 @@ a {
 
 .chat-form-container {
 	padding: 20px 30px;
-	background-color: var(--dark-color-a);
+	/* background-color: var(--dark-color-a); */
+	background-color: #bbdfee;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	border-bottom: 3px solid rgb(88, 177, 236);
+	border-left: 3px solid rgb(88, 177, 236);
+	border-right: 3px solid rgb(88, 177, 236);
 }
 
 .chat-form-container form {
@@ -133,18 +155,33 @@ a {
 	margin: 80px auto;
 	color: #fff;
 }
-
+.input-item{
+	border-radius: 6px;
+}
 .join-header {
 	text-align: center;
 	padding: 20px;
-	background: var(--dark-color-a);
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
+	color: rgb(112, 112, 112);
+	/* background: var(--dark-color-a); */
+	background-color: #bbdfee;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	border-top: 3px solid rgb(88, 177, 236);
+	border-left: 3px solid rgb(88, 177, 236);
+	border-right: 3px solid rgb(88, 177, 236);
 }
 
 .join-main {
 	padding: 30px 40px;
-	background: var(--dark-color-b);
+	/* background: var(--dark-color-b); */
+	color: rgb(97, 97, 97);
+	font-size: 20px;
+	background-color: #cde7f1;
+	border-left: 3px solid rgb(88, 177, 236);
+	border-right: 3px solid rgb(88, 177, 236);
+	border-bottom: 3px solid rgb(88, 177, 236);
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
 }
 
 .join-main p {
@@ -177,8 +214,17 @@ a {
 .join-main .btn {
 	margin-top: 20px;
 	width: 100%;
+	border-radius: 5px;
+	background-color: rgb(167, 214, 236);
+	font-size: 25px;
+	color: rgb(68, 68, 68);;
 }
-
+.btn:hover{
+	background-color: rgb(127, 203, 238);
+}
+.input-item:hover{
+	background-color:rgb(235, 243, 247) ;
+}
 @media (max-width: 700px) {
 	.chat-main {
 		display: block;
