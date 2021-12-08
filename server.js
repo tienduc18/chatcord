@@ -13,7 +13,19 @@ const {
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
+//
+//Connection to postgres database
+const { Client } = require('pg');
 
+const client = new Client({
+   host: "localhost",
+   user: "postgres",
+   port: 5555,
+   password: "huy04022000",
+   database: "postgres"
+})
+
+client.connect();
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -50,8 +62,23 @@ io.on('connection', socket => {
 
     io.to(user.room).emit('message', formatMessage(user.username, msg));
   });
-
-  // Runs when client disconnects
+  const text = `
+    CREATE TABLE IF NOT EXISTS "table" (
+	    "id" SERIAL,
+	    "value" VARCHAR(100) NOT NULL,
+	    PRIMARY KEY ("id")
+    );`;
+  client.query(text, (err, res) => {    
+    if (err) {
+      console.error(err);
+      return;
+    }
+    console.log('Data create successful');
+  })
+  msg = 'ư263572'
+  // Save to database
+  client.query('INSERT INTO "table" ("value") VALUES ($1);', [msg]);
+  //Runs when client disconnects
   socket.on('disconnect', () => {
     const user = userLeave(socket.id);
 
