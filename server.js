@@ -55,14 +55,16 @@ io.on('connection', socket => {
       users: getRoomUsers(user.room)
     });
   });
-
+ // Save to database
+  //client.query('INSERT INTO "table" ("value") VALUES ($1);', [msg]);
   // Listen for chatMessage
   socket.on('chatMessage', msg => {
     const user = getCurrentUser(socket.id);
 
     io.to(user.room).emit('message', formatMessage(user.username, msg));
-  });
-  const text = `
+
+    // Print to console the message, room and username
+    const text = `
     CREATE TABLE IF NOT EXISTS "table" (
 	    "id" SERIAL,
 	    "value" VARCHAR(100) NOT NULL,
@@ -75,9 +77,17 @@ io.on('connection', socket => {
     }
     console.log('Data create successful');
   })
-  msg = 'ư263572'
-  // Save to database
-  client.query('INSERT INTO "table" ("value") VALUES ($1);', [msg]);
+    console.log(msg);
+    client.query('INSERT INTO "table" ("value") VALUES ($1);', [msg]);
+    console.log(user.room);
+
+    console.log(user.username);
+
+    // Save to the database
+    
+  });
+
+
   //Runs when client disconnects
   socket.on('disconnect', () => {
     const user = userLeave(socket.id);
