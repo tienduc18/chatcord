@@ -16,28 +16,38 @@
     <div class="chat-container">
       <header class="chat-header">
         <h1><i class="fas fa-smile"></i> ChatCord</h1>
-        <a id="leave-btn" class="btn" style="color: #333; border-radius: 5px;"><i class="fas fa-sign-out-alt"></i>Leave Room</a>
+        <a id="leave-btn" class="btn" style="color: #333; border-radius: 5px;"><i class="fas fa-sign-out-alt"></i>Thoát</a>
       </header>
       <main class="chat-main">
         <div class="chat-sidebar">
-          <h3><i class="fas fa-comments"></i> Room Name:</h3>
-          <h2 id="room-name"></h2>
-          <h3><i class="fas fa-users"></i> Users</h3>
+          <h3><i class="fas fa-comments"></i> Tên phòng:</h3>
+          <h2 id="room-name" class="room"></h2>
+          <h3><i class="fas fa-users"></i> Người dùng:</h3>
           <ul id="users"></ul>
         </div>
         <div class="chat-messages"></div>
       </main>
       <div class="chat-form-container">
-        <form id="chat-form">
+        <div class="icon-hover">
+          <img src="https://cdn-icons-png.flaticon.com/512/1453/1453729.png" alt="" class="icon">
+          <div class="info">
+                  <li style="font-size: 25px; border-top-left-radius: 5px;border-top-right-radius: 5px;">Nhóm tác giả:</li>
+                  <li> Nguyễn Đăng Khoa -18133022</li>
+                  <li>Trần Tiến Đức     -18133007</li>
+                  <li>Nguyễn Quang Hùng -18133016</li>
+                  <li style="border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;">Ngô Trí Huy       -18133015</li>
+          </div>
+        </div>
+        <form id="chat-form" style="width: 80%;margin-left: 10%;">
           <input
             id="msg"
             type="text"
-            placeholder="Enter Message"
+            placeholder="Nhập tin nhắn tại đây..."
             required
             autocomplete="off"
             class="input-item"
           />
-          <button class="btn" style="color: #333; border-radius: 5px;"><i class="fas fa-paper-plane"></i> Send</button>
+          <button class="btn" style="color: #333; border-radius: 5px;margin-left: 10px; height: 40px;"><i class="fas fa-paper-plane"></i> Gửi</button>
         </form>
       </div>
     </div>

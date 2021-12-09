@@ -71,6 +71,7 @@ a {
 .chat-main {
 	display: grid;
 	grid-template-columns: 1fr 3fr;
+	height: 500px;
 }
 
 .chat-sidebar {
@@ -104,7 +105,10 @@ a {
 	padding: 30px;
 	max-height: 500px;
 	overflow-y: scroll;
-	background-image: url("https://file.vfo.vn/hinh/2018/03/hinh-anh-hinh-nen-powerpoint-don-gian-dep-nhat-chuyen-nghiep-1.jpg");
+	background-image: linear-gradient(180deg, rgba(226, 198, 171,0.2),rgba(247, 243, 240,1)),
+	url("https://file.vfo.vn/hinh/2018/03/hinh-anh-hinh-nen-powerpoint-don-gian-dep-nhat-chuyen-nghiep-1.jpg");
+	background-size: 100% ;
+	background-repeat: no-repeat;
 }
 
 .chat-messages .message {
@@ -136,6 +140,9 @@ a {
 	border-bottom: 3px solid rgb(88, 177, 236);
 	border-left: 3px solid rgb(88, 177, 236);
 	border-right: 3px solid rgb(88, 177, 236);
+	display: inline-flex;
+	width: 100%;
+	/* height: 80px; */
 }
 
 .chat-form-container form {
@@ -233,4 +240,40 @@ a {
 	.chat-sidebar {
 		display: none;
 	}
+}
+.room{
+	height: 30px;
+	border: 2px solid rgb(157, 174, 240);
+	border-radius: 5px;
+}
+.message{
+	width: 80%;
+}
+.icon{
+	width: 100%;
+	cursor: pointer;
+}
+.icon:hover{
+	background-color: #c0ebfc;
+	border-radius: 3px;
+}
+.info{
+	display: none;
+	border-radius: 5px;
+}
+.icon-hover:hover .info{
+	display: block;
+}
+.icon-hover{
+	width: 5%;
+	margin-left: 7%;
+}
+.info li{
+	list-style: none;
+	background-color: #dff1f8;
+	width: 500%;
+	padding: 7px;
+	color: #333;
+	border: 2 solid #fff;
+	
 }
