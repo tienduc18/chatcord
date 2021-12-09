@@ -15,15 +15,22 @@ const server = http.createServer(app);
 const io = socketio(server);
 //
 //Connection to postgres database
+//var conString = "postgres://postgres:huy04022000@localhost:5555/postgres";
+//var conString = "postgres://YourUserName:YourPassword@localhost:5432/YourDatabase";
 const { Client } = require('pg');
-
+//var pg = require('pg');
+//const client = new Client({
+//  connectionString: process.env.DATABASE_URL,
+//  ssl: true,
+//});
 const client = new Client({
-   host: "localhost",
-   user: "postgres",
-   port: 5555,
-   password: "huy04022000",
-   database: "postgres"
+  host: "localhost",
+  user: "postgres",
+  port: 5555,
+  password: "huy04022000",
+  database: "postgres"
 })
+//var client = new pg.Client(conString);
 
 client.connect();
 // Set static folder
@@ -55,8 +62,6 @@ io.on('connection', socket => {
       users: getRoomUsers(user.room)
     });
   });
- // Save to database
-  //client.query('INSERT INTO "table" ("value") VALUES ($1);', [msg]);
   // Listen for chatMessage
   socket.on('chatMessage', msg => {
     const user = getCurrentUser(socket.id);
@@ -64,27 +69,23 @@ io.on('connection', socket => {
     io.to(user.room).emit('message', formatMessage(user.username, msg));
 
     // Print to console the message, room and username
-    const text = `
-    CREATE TABLE IF NOT EXISTS "table" (
-	    "id" SERIAL,
-	    "value" VARCHAR(100) NOT NULL,
-	    PRIMARY KEY ("id")
-    );`;
-  client.query(text, (err, res) => {    
-    if (err) {
-      console.error(err);
-      return;
-    }
+    var tablename = `${user.room}_room`.toLowerCase();
+    var text = `CREATE TABLE IF NOT EXISTS ${tablename}\
+              ("msg_id" SERIAL,\
+              "sender" VARCHAR(50) NOT NULL,\
+              "msg" VARCHAR(100) NOT NULL,\
+              PRIMARY KEY ("msg_id"));`;
+    client.query(text, (err, res) => {    
+      if (err) {
+        console.error(err);
+        return;
+      }
     console.log('Data create successful');
-  })
-    console.log(msg);
-    client.query('INSERT INTO "table" ("value") VALUES ($1);', [msg]);
-    console.log(user.room);
-
-    console.log(user.username);
+    })
+    var username = `${user.username}`;
+    client.query(`INSERT INTO "${tablename}" ("sender","msg") VALUES ($1, $2);`,[username, msg]);    
 
     // Save to the database
-    
   });
 
 
