@@ -40,7 +40,18 @@ chatForm.addEventListener('submit', (e) => {
   if (!msg) {
     return false;
   }
+  // Images Submit
+  chatForm.addEventListener('button', (e) => {
+    e.preventDefault();
   
+    // Get message text
+    let msg = e.target.elements.msg.value;
+  
+    msg = msg.trim();
+  
+    if (!msg) {
+      return false;
+    }
   // Emit message to server
   socket.emit('chatMessage', msg);
 
@@ -79,7 +90,24 @@ function outputUsers(users) {
     userList.appendChild(li);
   });
 }
+function getBase64Image(img) {
+  // Create an empty canvas element
+  var canvas = document.createElement("canvas");
+  canvas.width = img.width;
+  canvas.height = img.height;
 
+  // Copy the image contents to the canvas
+  var ctx = canvas.getContext("2d");
+  ctx.drawImage(img, 0, 0);
+
+  // Get the data-URL formatted image
+  // Firefox supports PNG and JPEG. You could check img.src to
+  // guess the original format, but be aware the using "image/jpg"
+  // will re-encode the image.
+  var dataURL = canvas.toDataURL("image/png");
+
+  return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+}
 //Prompt the user before leave chat room
 document.getElementById('leave-btn').addEventListener('click', () => {
   const leaveRoom = confirm('Are you sure you want to leave the chatroom?');
@@ -89,3 +117,4 @@ document.getElementById('leave-btn').addEventListener('click', () => {
   } else {
   }
 });
+
