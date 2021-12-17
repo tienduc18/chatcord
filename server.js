@@ -22,7 +22,9 @@ const { Console } = require('console');
 //var pg = require('pg');
 const client = new Client({
   connectionString: process.env.DATABASE_URL,
-  ssl: true,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 //const client = new Client({
 //  host: "localhost",
