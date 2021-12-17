@@ -48,25 +48,25 @@ io.on('connection', socket => {
     //Lấy data để in ra màn hình
     var tablename = `${user.room}_room`.toLowerCase();
     let txt = "";
-    client.query(`SELECT "msg","sender" FROM "${tablename}" `, (err, res) => {
+    client.query(`SELECT "msg","sender","timestamp" FROM "${tablename}" `, (err, res) => {
       if (err) {
           console.error(err);
           return;
       }
       for (let row of res.rows) {
-        socket.emit('message', formatMessage(row["sender"], row["msg"])); 
+        socket.emit('message', formatMessage.formatMessageTime(row["sender"], row["msg"], row["timestamp"])); 
       }
     });
     
     // Welcome current user
-    socket.emit('message', formatMessage(botName, 'Chào mừng đến với ChatCord!'));
+    socket.emit('message', formatMessage.formatMessage(botName, 'Chào mừng đến với ChatCord!'));
 
     // Broadcast when a user connects
     socket.broadcast
       .to(user.room)
       .emit(
         'message',
-        formatMessage(botName, `${user.username} đã tham gia chat`)
+        formatMessage.formatMessage(botName, `${user.username} đã tham gia chat`)
       );
 
     // Send users and room info
@@ -80,14 +80,17 @@ io.on('connection', socket => {
   socket.on('chatMessage', msg => {
     const user = getCurrentUser(socket.id);
 
-    io.to(user.room).emit('message', formatMessage(user.username, msg));
-
+    io.to(user.room).emit('message', formatMessage.formatMessage(user.username, msg));
+    
     // Print to console the message, room and username
     var tablename = `${user.room}_room`.toLowerCase();
+    const moment = require('moment');
+    var time = moment().format('h:mm a')
     var text = `CREATE TABLE IF NOT EXISTS ${tablename}\
               ("msg_id" SERIAL,\
               "sender" VARCHAR(50) NOT NULL,\
               "msg" VARCHAR(100) NOT NULL,\
+              "timestamp" VARCHAR(10) NOT NULL,\
               PRIMARY KEY ("msg_id"));`;
     client.query(text, (err, res) => {    
       if (err) {
@@ -97,7 +100,7 @@ io.on('connection', socket => {
     console.log('Data create successful');
     })
     var username = `${user.username}`;
-    client.query(`INSERT INTO "${tablename}" ("sender","msg") VALUES ($1, $2);`,[username, msg]);    
+    client.query(`INSERT INTO "${tablename}" ("sender","msg","timestamp") VALUES ($1, $2, $3);`,[username, msg, time]);    
 
     // Save to the database
   });
@@ -110,7 +113,7 @@ io.on('connection', socket => {
     if (user) {
       io.to(user.room).emit(
         'message',
-        formatMessage(botName, `${user.username} đã rời khỏi chat`)
+        formatMessage.formatMessage(botName, `${user.username} đã rời khỏi chat`)
       );
 
       // Send users and room info
