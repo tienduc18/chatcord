@@ -20,19 +20,18 @@ const io = socketio(server);
 const { Client } = require('pg');
 const { Console } = require('console');
 //var pg = require('pg');
-//const client = new Client({
-//  connectionString: process.env.DATABASE_URL,
-//  ssl: true,
-//});
 const client = new Client({
-  host: "localhost",
-  user: "postgres",
-  port: 5555,
-  password: "huy04022000",
-  database: "postgres"
-})
+  connectionString: process.env.DATABASE_URL,
+  ssl: true,
+});
+//const client = new Client({
+//  host: "localhost",
+//  user: "postgres",
+//  port: 5555,
+//  password: "huy04022000",
+//  database: "postgres"
+//})
 //var client = new pg.Client(conString);
-
 client.connect();
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
