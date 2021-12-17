@@ -40,18 +40,7 @@ chatForm.addEventListener('submit', (e) => {
   if (!msg) {
     return false;
   }
-  // Images Submit
-  chatForm.addEventListener('button', (e) => {
-    e.preventDefault();
   
-    // Get message text
-    let msg = e.target.elements.msg.value;
-  
-    msg = msg.trim();
-  
-    if (!msg) {
-      return false;
-    }
   // Emit message to server
   socket.emit('chatMessage', msg);
 

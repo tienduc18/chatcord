@@ -18,6 +18,7 @@ const io = socketio(server);
 //var conString = "postgres://postgres:huy04022000@localhost:5555/postgres";
 //var conString = "postgres://YourUserName:YourPassword@localhost:5432/YourDatabase";
 const { Client } = require('pg');
+const { Console } = require('console');
 //var pg = require('pg');
 //const client = new Client({
 //  connectionString: process.env.DATABASE_URL,
@@ -44,16 +45,28 @@ io.on('connection', socket => {
     const user = userJoin(socket.id, username, room);
 
     socket.join(user.room);
-
+    //Lấy data để in ra màn hình
+    var tablename = `${user.room}_room`.toLowerCase();
+    let txt = "";
+    client.query(`SELECT "msg","sender" FROM "${tablename}" `, (err, res) => {
+      if (err) {
+          console.error(err);
+          return;
+      }
+      for (let row of res.rows) {
+        socket.emit('message', formatMessage(row["sender"], row["msg"])); 
+      }
+    });
+    
     // Welcome current user
-    socket.emit('message', formatMessage(botName, 'Welcome to ChatCord!'));
+    socket.emit('message', formatMessage(botName, 'Chào mừng đến với ChatCord!'));
 
     // Broadcast when a user connects
     socket.broadcast
       .to(user.room)
       .emit(
         'message',
-        formatMessage(botName, `${user.username} has joined the chat`)
+        formatMessage(botName, `${user.username} đã tham gia chat`)
       );
 
     // Send users and room info
@@ -63,39 +76,6 @@ io.on('connection', socket => {
     });
   });
   // Send photo
-  socket.on("sendPhoto", function(data){
-    var guess = data.base64.match(/^data:image\/(png|jpeg);base64,/)[1];
-    var ext = "";
-    switch(guess) {
-      case "png"  : ext = ".png"; break;
-      case "jpeg" : ext = ".jpg"; break;
-      default     : ext = ".bin"; break;
-    }
-    var savedFilename = "/upload"+randomString(10)+ext;
-    fs.writeFile(__dirname+"/public"+savedFilename, getBase64Image(data.base64), 'base64', function(err) {
-      if (err !== null)
-        console.log(err);
-      else 
-        io.to(roles.receiver).emit("receivePhoto", {
-          path: savedFilename,
-        });
-        console.log("Send photo success!");
-    });
-  });
-
-  function randomString(length)
-  {
-    var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
-
-    for( var i=0; i < length; i++ )
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-    return text;
-  } 
-  function getBase64Image(imgData) {
-    return imgData.replace(/^data:image\/(png|jpeg|jpg);base64,/, "");
-  }
   // Listen for chatMessage
   socket.on('chatMessage', msg => {
     const user = getCurrentUser(socket.id);
@@ -130,7 +110,7 @@ io.on('connection', socket => {
     if (user) {
       io.to(user.room).emit(
         'message',
-        formatMessage(botName, `${user.username} has left the chat`)
+        formatMessage(botName, `${user.username} đã rời khỏi chat`)
       );
 
       // Send users and room info
